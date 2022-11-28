@@ -19,20 +19,6 @@ RUN apt-get --allow-releaseinfo-change update && \
 
 RUN alias python=/usr/bin/python2
 
-# All further commands will be performed as the docker user.
-USER docker
-# Install additional global npm dependencies
-RUN \
-    # Initialize nvm environment
-    . $HOME/.profile && \
-    nvm install 14.18.1 && \
-    nvm alias default 14.18.1 && \
-    # Install node packages
-    npm install -g sharp gulp-cli
-
-# IMPORTANT! Switching back to the root user as the last instruction.
-USER root
-
 # Install kafka.
 RUN rm -rf /librdkafka \
     && git clone --depth 1 --branch v1.2.0 https://github.com/edenhill/librdkafka.git \
